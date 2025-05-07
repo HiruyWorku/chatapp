@@ -11,7 +11,7 @@ class ChatController extends Controller
 {
     public function fetchMessages()
     {
-        return Message::with('user')->get();
+    return Message::with('user')->orderBy('created_at')->get();
     }
 
     public function sendMessage(Request $request)

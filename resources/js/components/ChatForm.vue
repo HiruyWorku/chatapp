@@ -1,12 +1,12 @@
 <template>
-  <form @submit.prevent="sendMessage">
+  <form @submit.prevent="sendMessage" class="chat-form">
     <input
       v-model="newMessage"
       type="text"
       placeholder="Type your message..."
-      class="input"
+      class="chat-input"
     />
-    <button type="submit" class="button">Send</button>
+    <button type="submit" class="send-button">Send</button>
   </form>
 </template>
 
@@ -29,13 +29,36 @@ const sendMessage = async () => {
 </script>
 
 <style scoped>
-.input {
+.chat-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #222;
   padding: 10px;
-  width: 80%;
-  margin-right: 10px;
+  border-radius: 8px;
 }
 
-.button {
+.chat-input {
+  flex: 1;
   padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background-color: #333;
+  color: white;
+}
+
+.send-button {
+  padding: 10px 16px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background-color: #45a049;
 }
 </style>
