@@ -11,7 +11,7 @@ class ChatController extends Controller
 {
     public function fetchMessages()
     {
-    return Message::with('user')->orderBy('created_at')->get();
+    return Message::with('user:id,name')->orderBy('created_at')->get();
     }
 
     public function sendMessage(Request $request)
@@ -21,7 +21,8 @@ class ChatController extends Controller
             'message' => $request->input('message')
         ]);
 
-        broadcast(new MessageSent($message->load('user')))->toOthers();
+        $message->load('user'); // load the user relationship
+        broadcast(new MessageSent($message))->toOthers();
 
         return ['status' => 'Message Sent!'];
     }

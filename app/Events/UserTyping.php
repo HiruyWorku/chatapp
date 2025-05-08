@@ -2,21 +2,21 @@
 
 namespace App\Events;
 
-use App\Models\Message;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Support\Facades\Auth;
 
-class MessageSent implements ShouldBroadcast
+class UserTyping implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public $user;
 
-    public function __construct(Message $message)
+    public function __construct()
     {
-        $this->message = $message;
+        $this->user = Auth::user();
     }
 
     public function broadcastOn()
@@ -26,6 +26,6 @@ class MessageSent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'MessageSent';
+        return 'UserTyping';
     }
 }

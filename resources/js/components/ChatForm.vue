@@ -1,22 +1,27 @@
 <template>
-  <form @submit.prevent="sendMessage" class="chat-form">
+  <form @submit.prevent="sendMessage">
     <input
       v-model="newMessage"
       type="text"
       placeholder="Type your message..."
-      class="chat-input"
+      class="input"
     />
-    <button type="submit" class="send-button">Send</button>
+    <button type="submit" class="button">Send</button>
   </form>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import axios from 'axios';
 
 const newMessage = ref('');
-
 const emit = defineEmits(['messageSent']);
+
+watch(newMessage, async (newVal) => {
+  if (newVal.trim() !== '') {
+    await axios.post('/typing');
+  }
+});
 
 const sendMessage = async () => {
   if (newMessage.value.trim() === '') {
@@ -29,36 +34,13 @@ const sendMessage = async () => {
 </script>
 
 <style scoped>
-.chat-form {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: #222;
+.input {
   padding: 10px;
-  border-radius: 8px;
+  width: 80%;
+  margin-right: 10px;
 }
 
-.chat-input {
-  flex: 1;
+.button {
   padding: 10px;
-  border-radius: 6px;
-  border: none;
-  outline: none;
-  background-color: #333;
-  color: white;
-}
-
-.send-button {
-  padding: 10px 16px;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.send-button:hover {
-  background-color: #45a049;
 }
 </style>

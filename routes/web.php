@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ChatController;
+use App\Events\UserTyping;
+
+Route::post('/typing', function () {
+    broadcast(new UserTyping())->toOthers();
+});
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
